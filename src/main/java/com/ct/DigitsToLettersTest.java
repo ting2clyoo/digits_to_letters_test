@@ -12,12 +12,12 @@ public class DigitsToLettersTest {
     public static HashMap<String, List<String>> digitsMap;
 
     public static void main( String[] args ){
-        initDigitsMap();//初始化方法
+        initDigitsMap();//Initialization method
         digitsToLetters();
     }
 
     /**
-     * 初始化数字字母映射数据
+     * Initialization of number and letter mapping data
      */
     public static void initDigitsMap(){
         digitsMap=new HashMap<>();
@@ -35,17 +35,17 @@ public class DigitsToLettersTest {
     }
 
     /**
-     * 将数字转换成字母数组
+     * Convert numbers to an array of letters
      */
     public static void digitsToLetters(){
         Scanner input = new Scanner(System.in);
-        System.out.println("请输入0到9的数字:");
+        System.out.println("Please input digits from 0 to 9:");
         //输入按键数字1-9
         String digits="";
         while(true){
             digits= input.next();
             if(!digits.matches("[0-9]{1,2}")){
-                System.out.println("输入不合法！只能输入0-99的数字,请重新输入：");
+                System.out.println("Illegal input! Only 0-99 numbers can be entered. Please re-enter：");
             }else{
                 break;
             }
@@ -60,21 +60,21 @@ public class DigitsToLettersTest {
             if(i<arrStr.length-1){
                 arrInput.append(",");
             }
-            //先将多个list中的数据都添加到同一个集合中作为数据源
+            //First add the data from multiple lists to the same collection as the data source
             List<String> lettersList=digitsMap.get(arrStr[i]);
-            //没有数据的集合不能强行转换为数组
+            //A collection without data cannot be forcibly converted to an array
             if(lettersList.size()>0){
                 String[] letterArr= (String[]) lettersList.toArray();
                 dataList.add(letterArr);
             }
         }
         arrInput.append("}");
-        //递归实现多数组排列组合，并返回最终的排列集合
+        //Recursively realizes the permutation and combination of multiple arrays, and returns the final permutation set
         List<String[]> resultList= makeupLetters(dataList,0,null);
-        //打印输入内容
+        //Print input
         System.out.println(arrInput.toString());
         System.out.print("Output:");
-        //打印输出排列组合结果
+        //Print out the result of permutation and combination
         for(int i=0;i<resultList.size();i++){
             String[] letterArr=resultList.get(i);
             System.out.print(" ");
@@ -85,7 +85,7 @@ public class DigitsToLettersTest {
     }
 
     /**
-     * 递归实现多数组排列组合
+     * Recursive implementation of multiple array permutation and combination
      * @param dataList
      * @param index
      * @param resultList
@@ -97,7 +97,7 @@ public class DigitsToLettersTest {
         }
 
         List<String[]> resultList0=new ArrayList<String[]>();
-        //第一列数组默认有多少个字母就添加多少个排列数据
+        //The first column array adds as many permutation data as the number of letters by default
         if(index==0){
             String[] dataArr=dataList.get(0);
             for(String s : dataArr){
@@ -107,11 +107,11 @@ public class DigitsToLettersTest {
             String[] dataArr=dataList.get(index);
             for(String[] dataArr0: resultList){
                 for(String s : dataArr){
-                    //复制数组并扩充新元素
+                    //Copy array and expand new elements
                     String[] dataArrCopy=new String[dataArr0.length+1];
                     System.arraycopy(dataArr0, 0, dataArrCopy, 0, dataArr0.length);
                     dataArrCopy[dataArrCopy.length-1]=s;
-                    //追加到结果集
+                    //Append to result set
                     resultList0.add(dataArrCopy);
                 }
             }
